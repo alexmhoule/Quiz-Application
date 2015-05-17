@@ -7,7 +7,6 @@
 .myOverrideHead {
 	margin-top: 5rem;
 	text-align: center;
-	clear: both;
 }
 
 .test {
@@ -18,4 +17,5 @@
 	width: 50%; 
 	height: 20%;
 	text-align: center;
+	clear: both;
 }
