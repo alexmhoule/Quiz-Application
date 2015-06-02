@@ -53,7 +53,7 @@ $(document).ready(function () {
 
 	var questionCounter = 0;
 
-	var currentQuestion = questionArray[questionCounter];
+	//var currentQuestion = questionArray[questionCounter];
 
 	function loadData() {
 		$('#mascotImage').attr('src', currentQuestion.mascotImage);
@@ -92,7 +92,12 @@ $(document).ready(function () {
 		// user answers both
 		// if question is correct increment correctCounter *note create correctCounter*
 		questionCounter++;
+		currentQuestion();
 		loadData();
+	}
+
+	function currentQuestion() {
+		return questionArray[questionCounter];
 	}
 
 });
