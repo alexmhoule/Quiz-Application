@@ -95,15 +95,19 @@ $(document).ready(function () {
 		var tnAnswer = $('teamName').text();
 		var mnCorrect = currentQuestion.answer;
 		var tnCorrect = currentQuestion.secondAnswer;
+		var correctPoints = 0;
 
-		if($('input[name=mascotName]:checked').val == mnCorrect && $('input[name=teamName]:checked').val == currentQuestion.secondAnswer) {
+		if($('input[name=mascotName]:checked').val() == currentQuestion.answer && $('input[name=teamName]:checked').val() == currentQuestion.secondAnswer) {
 			alert('You are correct!');
-		}else if ($('input[name=mascotName]:checked').val == currentQuestion.answer || $('input[name=teamName]:checked').val == currentQuestion.secondAnswer) {
+			this.correctPoints+=2;
+		}else if ($('input[name=mascotName]:checked').val() == currentQuestion.answer || $('input[name=teamName]:checked').val() == currentQuestion.secondAnswer) {
 			alert('You are partially correct');
+			this.correctPoints+=1;
 		}else {
 			alert('Wrong answers');
 		}
 		// user answers both
+
 		if($('input[name=mascotName]:checked').val()==undefined) {
 			alert("Please select a mascot's name.");
 		} else {
@@ -115,10 +119,14 @@ $(document).ready(function () {
 		} else {
 			console.log($('input[name=teamName]:checked').val() + ' has been selected');
 		}
+
 		// if question is correct increment correctCounter *note create correctCounter*
+
 		questionCounter++;
 		currentQuestion = questionArray[questionCounter];
 		$('input[type=radio]').attr("checked", false);
+		correctPoints++;
+		console.log(correctPoints);
 		loadData();
 	}
 
