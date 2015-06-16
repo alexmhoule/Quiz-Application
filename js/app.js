@@ -53,31 +53,32 @@ $(document).ready(function () {
 
 	var questionCounter = 0;
 
-	//var currentQuestion = questionArray[questionCounter];
+	var currentQuestion = questionArray[questionCounter];
 
 	function loadData() {
+		console.log(questionCounter);
 		$('#mascotImage').attr('src', currentQuestion.mascotImage);
 		$('#q1a1').val(currentQuestion.choice1);
-		$('#q1a1').after(currentQuestion.choice1);
+		$('#q1a1Label').text(currentQuestion.choice1);
 		$('#q1a2').val(currentQuestion.choice2);
-		$('#q1a2').after(currentQuestion.choice2);
+		$('#q1a2Label').text(currentQuestion.choice2);
 		$('#q1a3').val(currentQuestion.choice3);
-		$('#q1a3').after(currentQuestion.choice3);
+		$('#q1a3Label').text(currentQuestion.choice3);
 		$('#q1a4').val(currentQuestion.choice4);
-		$('#q1a4').after(currentQuestion.choice4);
+		$('#q1a4Label').text(currentQuestion.choice4);
 		$('#q1a5').val(currentQuestion.choice5);
-		$('#q1a5').after(currentQuestion.choice5);
+		$('#q1a5Label').text(currentQuestion.choice5);
 
 		$('#q2a1').val(currentQuestion.secondchoice1);
-		$('#q2a1').after(currentQuestion.secondchoice1);
+		$('#q2a1Label').text(currentQuestion.secondchoice1);
 		$('#q2a2').val(currentQuestion.secondchoice2);
-		$('#q2a2').after(currentQuestion.secondchoice2);
+		$('#q2a2Label').text(currentQuestion.secondchoice2);
 		$('#q2a3').val(currentQuestion.secondchoice3);
-		$('#q2a3').after(currentQuestion.secondchoice3);
+		$('#q2a3Label').text(currentQuestion.secondchoice3);
 		$('#q2a4').val(currentQuestion.secondchoice4);
-		$('#q2a4').after(currentQuestion.secondchoice4);
+		$('#q2a4Label').text(currentQuestion.secondchoice4);
 		$('#q2a5').val(currentQuestion.secondchoice5);
-		$('#q2a5').after(currentQuestion.secondchoice5);
+		$('#q2a5Label').text(currentQuestion.secondchoice5);
 	}
 
 	loadData();
@@ -89,15 +90,36 @@ $(document).ready(function () {
 
 	function checkAnswers() {
 		//.val() == currentQuestion.correctAnswer
+
+		var mnAnswer = $('mascotName').text();
+		var tnAnswer = $('teamName').text();
+		var mnCorrect = currentQuestion.answer;
+		var tnCorrect = currentQuestion.secondAnswer;
+
+		if($('input[name=mascotName]:checked').val == mnCorrect && $('input[name=teamName]:checked').val == currentQuestion.secondAnswer) {
+			alert('You are correct!');
+		}else if ($('input[name=mascotName]:checked').val == currentQuestion.answer || $('input[name=teamName]:checked').val == currentQuestion.secondAnswer) {
+			alert('You are partially correct');
+		}else {
+			alert('Wrong answers');
+		}
 		// user answers both
+		if($('input[name=mascotName]:checked').val()==undefined) {
+			alert("Please select a mascot's name.");
+		} else {
+			console.log($('input[name=mascotName]:checked').val() + ' has been selected');
+		}
+
+		if($('input[name=teamName]:checked').val()==undefined) {
+			alert("Please select a team's name.");
+		} else {
+			console.log($('input[name=teamName]:checked').val() + ' has been selected');
+		}
 		// if question is correct increment correctCounter *note create correctCounter*
 		questionCounter++;
-		currentQuestion();
+		currentQuestion = questionArray[questionCounter];
+		$('input[type=radio]').attr("checked", false);
 		loadData();
-	}
-
-	function currentQuestion() {
-		return questionArray[questionCounter];
 	}
 
 });
