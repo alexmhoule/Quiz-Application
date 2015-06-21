@@ -128,7 +128,7 @@ $(document).ready(function () {
 
 	function feedback() {
 		if(correctPoints == 16) {
-			document.getElementById("feedback").innerHTML = ("Congradulations, you have passed this quiz with a perfect score. Great job!");
+			document.getElementById("feedback").innerHTML = ("Congratulations, you have passed this quiz with a perfect score. Great job!");
 		} else if (correctPoints > 9 && correctPoints <= 15){
 			document.getElementById("feedback").innerHTML = ("Good job, you scored very well but not perfectly. Please feel free to try again.");
 		} else if (correctPoints > 7 && correctPoints <= 9){
