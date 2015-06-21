@@ -1,7 +1,11 @@
 .myOverride {
-	margin-top: 15rem;
+	margin-top: 20rem;
 	text-align: center;
 	clear: both;
+}
+
+.buttonOverride {
+	margin-top: 10rem;
 }
 
 .myOverrideHead {
@@ -17,4 +21,11 @@
 	width: 50%; 
 	height: 20%;
 	text-align: center;
+}
+
+.endscreen {
+	position: fixed;
+	height: 17rem;
+	width: 100%;
+	color: #FFF;
 }

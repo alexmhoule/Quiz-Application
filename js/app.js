@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
-	function question(mascotImage, question, answer, choice1, choice2, choice3, choice4, choice5, secondquestion, secondanswer, secondchoice1, secondchoice2, secondchoice3, secondchoice4, secondchoice5) {
+	$('#endScreen').hide();
+
+	function question(mascotImage, question, answer, choice1, choice2, choice3, choice4, choice5, secondquestion, secondAnswer, secondchoice1, secondchoice2, secondchoice3, secondchoice4, secondchoice5) {
 		this.mascotImage = mascotImage;
 		this.question = question;
 		this.answer = answer;
@@ -10,7 +12,7 @@ $(document).ready(function () {
 		this.choice4 = choice4;
 		this.choice5 = choice5;
 		this.secondquestion = secondquestion;
-		this.secondanswer = secondanswer;
+		this.secondAnswer = secondAnswer;
 		this.secondchoice1 = secondchoice1;
 		this.secondchoice2 = secondchoice2;
 		this.secondchoice3 = secondchoice3;
@@ -55,6 +57,8 @@ $(document).ready(function () {
 
 	var currentQuestion = questionArray[questionCounter];
 
+	var correctPoints = 0;
+
 	function loadData() {
 		console.log(questionCounter);
 		$('#mascotImage').attr('src', currentQuestion.mascotImage);
@@ -85,49 +89,68 @@ $(document).ready(function () {
 
 	$('#submitAnswer').click(function (event) {
 		event.preventDefault();
-		checkAnswers();
+
+		if($('input[name=mascotName]:checked').val()==undefined && $('input[name=teamName]:checked').val()==undefined) {
+			alert("Please answer the questions.");
+		}else if ($('input[name=mascotName]:checked').val()==undefined) {
+			alert("Please select a mascot's name.");
+		} else if ($('input[name=teamName]:checked').val()==undefined) {
+			alert("Please select a team name.");
+		} else {
+			checkAnswers();
+		}
 	});
 
 	function checkAnswers() {
-		//.val() == currentQuestion.correctAnswer
-
-		var mnAnswer = $('mascotName').text();
-		var tnAnswer = $('teamName').text();
-		var mnCorrect = currentQuestion.answer;
-		var tnCorrect = currentQuestion.secondAnswer;
-		var correctPoints = 0;
 
 		if($('input[name=mascotName]:checked').val() == currentQuestion.answer && $('input[name=teamName]:checked').val() == currentQuestion.secondAnswer) {
 			alert('You are correct!');
-			this.correctPoints+=2;
+			correctPoints+=2;
 		}else if ($('input[name=mascotName]:checked').val() == currentQuestion.answer || $('input[name=teamName]:checked').val() == currentQuestion.secondAnswer) {
-			alert('You are partially correct');
-			this.correctPoints+=1;
+			alert("You are partially correct. The correct mascot name is " + currentQuestion.answer + " and the correct team is " + currentQuestion.secondAnswer);
+			correctPoints+=1;
 		}else {
-			alert('Wrong answers');
+			alert("Wrong answers. The correct mascot name is " + currentQuestion.answer + " and the correct team is " + currentQuestion.secondAnswer);
 		}
-		// user answers both
-
-		if($('input[name=mascotName]:checked').val()==undefined) {
-			alert("Please select a mascot's name.");
-		} else {
-			console.log($('input[name=mascotName]:checked').val() + ' has been selected');
-		}
-
-		if($('input[name=teamName]:checked').val()==undefined) {
-			alert("Please select a team's name.");
-		} else {
-			console.log($('input[name=teamName]:checked').val() + ' has been selected');
-		}
-
-		// if question is correct increment correctCounter *note create correctCounter*
 
 		questionCounter++;
 		currentQuestion = questionArray[questionCounter];
 		$('input[type=radio]').attr("checked", false);
-		correctPoints++;
 		console.log(correctPoints);
-		loadData();
+		
+		if(questionCounter==questionArray.length) {
+			end();
+		}else {
+			loadData();
+		}
+
 	}
+
+	function feedback() {
+		if(correctPoints == 16) {
+			document.getElementById("feedback").innerHTML = ("Congradulations, you have passed this quiz with a perfect score. Great job!");
+		} else if (correctPoints > 9 && correctPoints <= 15){
+			document.getElementById("feedback").innerHTML = ("Good job, you scored very well but not perfectly. Please feel free to try again.");
+		} else if (correctPoints > 7 && correctPoints <= 9){
+			document.getElementById("feedback").innerHTML = ("Not bad, although you could score better if you review team mascots more. Feel free to review and retry.");
+		} else {
+			document.getElementById("feedback").innerHTML = ("You have failed. Feel free to practice more and retake.");
+		}
+	}
+
+	function end() {
+		console.log("completed");
+		$('#endScreen').show();
+		$('#mascotDiv').hide();
+		$('#photoDiv').hide();
+		$('#teamDiv').hide();
+		$('#submitDiv').hide();
+		feedback();
+	}
+
+	$('#restart').click(function () {
+		location.reload();
+	});
+
 
 });
