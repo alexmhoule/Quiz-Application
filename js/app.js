@@ -146,6 +146,13 @@ $(document).ready(function () {
 		$('#teamDiv').hide();
 		$('#submitDiv').hide();
 		feedback();
+		playTheme();
+	}
+
+	function playTheme() {
+	$('#mlbTheme')[0].volume = 0.5;
+	$('#mlbTheme')[0].load();
+	$('#mlbTheme')[0].play();
 	}
 
 	$('#restart').click(function () {
