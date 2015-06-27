@@ -59,6 +59,12 @@ $(document).ready(function () {
 
 	var correctPoints = 0;
 
+	var correctResponse = 0;
+
+	var partialResponse = 0;
+
+	var wrongResponse = 0;
+
 	function loadData() {
 		console.log(questionCounter);
 		$('#mascotImage').attr('src', currentQuestion.mascotImage);
@@ -106,11 +112,16 @@ $(document).ready(function () {
 		if($('input[name=mascotName]:checked').val() == currentQuestion.answer && $('input[name=teamName]:checked').val() == currentQuestion.secondAnswer) {
 			alert('You are correct!');
 			correctPoints+=2;
+			correctResponse++;
+			correctMusic();
 		}else if ($('input[name=mascotName]:checked').val() == currentQuestion.answer || $('input[name=teamName]:checked').val() == currentQuestion.secondAnswer) {
 			alert("You are partially correct. The correct mascot name is " + currentQuestion.answer + " and the correct team is " + currentQuestion.secondAnswer);
 			correctPoints+=1;
+			partialResponse++;
 		}else {
 			alert("Wrong answers. The correct mascot name is " + currentQuestion.answer + " and the correct team is " + currentQuestion.secondAnswer);
+			wrongResponse++;
+			wrongMusic();
 		}
 
 		questionCounter++;
@@ -128,13 +139,13 @@ $(document).ready(function () {
 
 	function feedback() {
 		if(correctPoints == 16) {
-			document.getElementById("feedback").innerHTML = ("Congratulations, you have passed this quiz with a perfect score. Great job!");
+			document.getElementById("feedback").innerHTML = ("Congratulations, you have passed this quiz with a perfect score. Great job! You got " + correctResponse + " of 8 questions right, " + partialResponse + " of 8 questions partially right, and " + wrongResponse + " of 8 questions wrong. You socred a total of " + correctPoints + " out of 16.");
 		} else if (correctPoints > 9 && correctPoints <= 15){
-			document.getElementById("feedback").innerHTML = ("Good job, you scored very well but not perfectly. Please feel free to try again.");
+			document.getElementById("feedback").innerHTML = ("Good job, you scored very well but not perfectly. Please feel free to try again. You got " + correctResponse + " of 8 questions right, " + partialResponse + " of 8 questions partially right, and " + wrongResponse + " of 8 questions wrong. You socred a total of " + correctPoints + " out of 16.");
 		} else if (correctPoints > 7 && correctPoints <= 9){
-			document.getElementById("feedback").innerHTML = ("Not bad, although you could score better if you review team mascots more. Feel free to review and retry.");
+			document.getElementById("feedback").innerHTML = ("Not bad, although you could score better if you review team mascots more. Feel free to review and retry. You got " + correctResponse + " of 8 questions right, " + partialResponse + " of 8 questions partially right, and " + wrongResponse + " of 8 questions wrong. You socred a total of " + correctPoints + " out of 16.");
 		} else {
-			document.getElementById("feedback").innerHTML = ("You have failed. Feel free to practice more and retake.");
+			document.getElementById("feedback").innerHTML = ("You have failed. Feel free to practice more and retake. You got " + correctResponse + " of 8 questions right, " + partialResponse + " of 8 questions partially right, and " + wrongResponse + " of 8 questions wrong. You socred a total of " + correctPoints + " out of 16.");
 		}
 	}
 
@@ -153,6 +164,18 @@ $(document).ready(function () {
 	$('#mlbTheme')[0].volume = 0.5;
 	$('#mlbTheme')[0].load();
 	$('#mlbTheme')[0].play();
+	}
+
+	function correctMusic() {
+	$('#correct')[0].volume = 0.5;
+	$('#correct')[0].load();
+	$('#correct')[0].play();
+	}
+
+	function wrongMusic() {
+	$('#wrong')[0].volume = 0.5;
+	$('#wrong')[0].load();
+	$('#wrong')[0].play();
 	}
 
 	$('#restart').click(function () {
